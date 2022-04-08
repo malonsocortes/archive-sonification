@@ -6,7 +6,6 @@ import java.util.Random;
 AudioIn input;
 SawOsc sin;
 PinkNoise pn;
-float sinFreq, sinAmp, sinAdd, sinPos;
 Amplitude amp;
 File dir;
 File [] files;
@@ -15,8 +14,6 @@ boolean mouse_pressed = false;
 int numFrame = 0;
 int maxFrame = 0;
 PImage currentImg;
-float freqLow=200;
-float freqHigh=600;
 float maxVolume = 0.0;
 Random r = new Random();
 
@@ -36,7 +33,6 @@ void setup(){
   
   // Create audio input signal
   input = new AudioIn(this, 0);
-  //input = new SoundFile(this, "Medios_sintientes.m4a");
   input.start();
   
   // Create sine oscilator
@@ -52,7 +48,6 @@ void setup(){
   dir = new File(savePath("data"));
   files = dir.listFiles();
   images = new TreeMap<Float, PImage>();
-  //movies = new TreeMap<float,Movie>();
   
   for (int i = 0; i <= files.length - 1; i++) {
     String path = files[i].getAbsolutePath();
@@ -148,7 +143,6 @@ void draw() {
   } else if (numFrame == 1) {
     // Volume is used to select an image that is shown on screen
     float volume = amp.analyze();
-    println("vol=", volume);
     if (volume > 0.0015){
       volume = volume - 0.0015;
     } else {
@@ -179,7 +173,6 @@ float [] getSinParams(PImage img){
   float add = map(x, 0, img.width, 0, 0.5);
   float amp = mapAmp(img, x, y);
   float pos = 0;
-  //print("    Amp=",amp);
   return new float [] {freq, amp, add, pos};
 }
 
